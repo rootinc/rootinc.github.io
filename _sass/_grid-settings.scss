@@ -1,0 +1,5 @@
+@import "neat/neat-helpers";
+
+$max-width: 640px;
+
+$small: new-breakpoint(max-width 520px 12);
