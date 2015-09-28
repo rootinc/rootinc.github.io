@@ -69,6 +69,23 @@ code, pre {
   line-height: 1.25em;
 }
 
+.post-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  li {
+    padding-bottom: 1em;
+    border-bottom: 1px solid lighten(#666666, 50%);
+    margin-bottom: 1em;
+    h2 {
+      margin-bottom: 0;
+      a {
+        text-decoration: none
+      }
+    }
+  }
+}
+
 footer {
   .footer-panel {
     @include span-columns(6 of 12);
