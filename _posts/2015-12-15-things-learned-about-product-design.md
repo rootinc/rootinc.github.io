@@ -3,7 +3,7 @@ layout: post
 title:  "Things Learned About Product Design"
 date:   2015-12-115 13:30:00
 author: "Jordan Justice"
-categories: product design
+categories: design
 published: false
 ---
 
