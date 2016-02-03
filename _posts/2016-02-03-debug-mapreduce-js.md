@@ -48,7 +48,7 @@ It expects to be called as a reduce() handler and allows you to label each debug
 {% highlight javascript linenos %}
 let behaviors = track.metrics
   .reduce((list1, m) => list1.concat(m.behaviors), [])
-  .reduce(MRDbg(‘first’))
+  .reduce(MRDbg('first'))
   .reduce((list2, b) =>
     ((list2.indexOf(b) === -1 && list2.push(b)) || 1) && list2
   , [])
