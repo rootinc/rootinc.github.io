@@ -62,4 +62,6 @@ first [140, 141, 142, 143, 144, 132, 145, 146, 147, 148, 149, 150, 151, 152, 153
 main.js:115 
 second [140, 141, 142, 143, 144, 132, 145, 146, 147, 148, 149, 150, 151, 152, 153, 87, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 100, 178, 89, 179, 101, 102, 98, 180, 181, 182, 183, 184, 110, 185, 112, 186]
 {% endhighlight %}
-You can find a gist of the function here along with an ES5 compatible version.
+You can find a gist of the function [here][gist] along with an ES5 compatible version.
+
+[gist]: https://gist.github.com/mattcodez/617336258d243078f74f
