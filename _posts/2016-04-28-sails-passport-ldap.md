@@ -60,7 +60,7 @@ module.exports = {
 The difference here is `password` is not required (because we use LDAP first, then local, and with LDAP system, password is stored in the cloud).  I also removed the `toJSON()` method.  Finally, in the `beforeCreate()` method, I made sure that there was a `user.password` before bcrypting.  In an LDAP system, since we have no password, there would be nothing to bcrypt.  
 
 3: Here's what I ended up doing:
-```  
+```
 var passport = require('passport');
 
 module.exports = {
@@ -90,13 +90,13 @@ module.exports = {
     res.redirect('/');
   }
 };
-```  
+```
 First, `passport.authenticate` can take more than one type of authentication method.  In our case, we needed to do 'ldapauth' then 'local'.  We route this to `postLogin`.  If a successful login, we redirect to root.  Otherwise we redirect to login again.  
 We add `getLogin` which is different in the other tutorial.  This is so we can display an error message, like `invalid username/pass`.  
 
 4: Login view is pretty much the same.  Difference here is we add `<%= message %>` to echo the error message.  We no longer have a signup form, since this should be done IT side.  Local, we will add users manually if we need this.  
 Here is the code:  
-```  
+```
 <h1>Login</h1>
 <p><%= message %></p>
 <form method="post" action="/login">
@@ -104,7 +104,7 @@ Here is the code:
   <input type="password" name="password" placeholder="password">
   <input type="submit" value="submit">
 </form>
-```  
+```
 5: Not much to routes.  Here is the code: 
 ```  
 'get /login':'AuthController.getLogin',
