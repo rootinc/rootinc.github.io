@@ -185,7 +185,7 @@ We call Passport's `serializeUser` and `deserializeUser` functions.  After that,
 
 8: Nothing to change/add here.  
 
-9: This part is a little tricky because it is more custom to your app.  Learn more about it [link2][here]:
+9: This part is a little tricky because it is more custom to your app.  Learn more about it [here][link2]:
 
 This is what we ended up using:  
 {% highlight javascript linenos %}
