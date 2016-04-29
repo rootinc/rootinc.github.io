@@ -6,7 +6,7 @@ author: "Dan Jewett"
 categories: javascript sailsjs passport ldap
 published: true
 ---
-This tutorial is based on this link: http://www.iliketomatoes.com/implement-passport-js-authentication-with-sails-js-0-10-2/
+This tutorial is based on this [link][link1]:
 
 I will point out differences:
 
@@ -185,7 +185,7 @@ We call Passport's `serializeUser` and `deserializeUser` functions.  After that,
 
 8: Nothing to change/add here.  
 
-9: This part is a little tricky because it is more custom to your app.  Learn more about it here: http://sailsjs.org/documentation/concepts/policies  
+9: This part is a little tricky because it is more custom to your app.  Learn more about it [link2][here]:
 
 This is what we ended up using:  
 {% highlight javascript linenos %}
@@ -205,3 +205,6 @@ This is what we ended up using:
 Essentially, all routes need to run passport policy (of step 8) first `'*': ['passport']`.  If you are using the `AuthController`, all routes can exclude the passport policy: `'*': true`.  If you are using the `ProjectsController`, css, exportTemplates, exportPage and preloader exclude the passport policy.
 
 That is it!  With that configuration, we were able to get LDAP working in a Sails app using passport.
+
+[link1]: http://www.iliketomatoes.com/implement-passport-js-authentication-with-sails-js-0-10-2/
+[link2]: http://sailsjs.org/documentation/concepts/policies
