@@ -12,7 +12,7 @@ There are a couple things we need to do in addition to the tutorial previously m
 
 1: First, make sure you `npm install passport-azure-oath` and update `package.json` to reflect this.  You can remove and npm uninstall `passport-ldap`.
 
-2: Next, we need to set up an app with M$ Office 365 Dev Tools.  Let's go [here][link2].  You will need to login with your root credentials and allow the M$ dev app.  From there, use the form -- it's pretty easy.  Redirect URI was a little tricky for me, in that it should be the route to your app that callbacks the login request after success with Office 365 login.  I ended up using the same as you will see in a few steps.
+2: Next, we need to set up an app with M$ Office 365 Dev Tools.  Let's go [here][link2].  You will need to login with your root credentials and allow the M$ dev app.  From there, use the form -- it's pretty easy.  Redirect URI was a little tricky for me, in that it should be the route to your app that callbacks the login request after success with Office 365 login.  I ended up using the same function/route/path as you will see in a few steps.
 
 3: Here's what I ended up changing in `AuthController.js`:
 {% highlight javascript linenos %}
@@ -34,7 +34,7 @@ There are a couple things we need to do in addition to the tutorial previously m
   },
   ..
 {% endhighlight %}
-Notice I now have a localcallback and azurecallback.  These functions are essentially the posts/gets now.  On local post, we use the localcallback, and on azurepost, we use azurecallback.  If a response comes back from M$, we use the azurecallback to essentially "retry". 
+Notice I now have a localcallback and azurecallback.  On local post, we use the localcallback, and on azurepost, we use azurecallback.  When the response comes back from M$, we use the azurecallback to essentially "retry". 
 
 4: The passport service (`passport.js`) changed quite a bit.
 Here is the code:  
@@ -85,7 +85,7 @@ passport.use(new LocalStrategy(sails.config.passport.local,function(email, passw
 }));
 
 {% endhighlight %}
-The biggest thing to pont out is that we are using the AzureStrategy now, instead of the ldap.  The data in the profile object is slightly different than what was coming back from ldap, so tak enote of that.
+The biggest thing to pont out is that we are using the AzureStrategy now, instead of the ldap.  The data in the profile object is slightly different than what was coming back from ldap, so take note of that.
 
 5: `Passport.js config`
 {% highlight javascript linenos %}
@@ -98,7 +98,7 @@ The biggest thing to pont out is that we are using the AzureStrategy now, instea
   }
   ..
 {% endhighlight %}
-Removed the ldap config, and added ldap config.  Note, from step one, here is where your clientId and clientSecret go.
+I removed the ldap config, and added ldap config.  Note, from step two, here is where your clientId and clientSecret go.  If you need this for development, modify your local.js and add the values from step two here.
 
 6: `Route.js`
 {% highlight javascript linenos %}
@@ -128,7 +128,7 @@ This structure changed a lot -- in favor of how a lot of other passport services
 </form>
 {% endhighlight %}
 
-That is it!  With that configuration, we were able to get Azure-OAuth working in a Sails app using passport.
+That is it!  With this configuration, we were able to get Azure-OAuth working in a Sails app using passport.
 
 [link1]: http://rootinc.github.io/2016/04/28/sails-passport-ldap/
 [link2]: https://dev.office.com/app-registration
