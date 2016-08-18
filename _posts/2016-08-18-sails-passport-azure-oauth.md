@@ -12,7 +12,7 @@ There are a couple things we need to do in addition to the tutorial previously m
 
 1: First, make sure you `npm install passport-azure-oath` and update `package.json` to reflect this.  You can remove and npm uninstall `passport-ldap`.
 
-2: Next, we need to set up an app with M$ Office 365 Dev Tools.  Let's go [here][link2].  You will need to login with your root credentials and allow the M$ dev app.  From there, use the form -- it's pretty easy.  Redirect URI was a little tricky for me, in that it should be the route to your app that callbacks the login request.  I ended up using the same as you will see in a few steps.
+2: Next, we need to set up an app with M$ Office 365 Dev Tools.  Let's go [here][link2].  You will need to login with your root credentials and allow the M$ dev app.  From there, use the form -- it's pretty easy.  Redirect URI was a little tricky for me, in that it should be the route to your app that callbacks the login request after success with Office 365 login.  I ended up using the same as you will see in a few steps.
 
 3: Here's what I ended up changing in `AuthController.js`:
 {% highlight javascript linenos %}
@@ -127,79 +127,8 @@ This structure changed a lot -- in favor of how a lot of other passport services
   <input type="submit" value="submit">
 </form>
 {% endhighlight %}
-This file holds the `config` information for our passport settings.  If you need a local config file, simply add a `local.js` to the config folder with your passport settings.  
 
-Next, which is what the tutorial originally had in the `config/passport.js` file, we moved to `services/passport.js`.  That looks like this:  
-{% highlight javascript linenos %}
-var passport = require('passport'),
-LocalStrategy = require('passport-local').Strategy,
-LdapStrategy = require('passport-ldapauth').Strategy,
-bcrypt = require('bcrypt-nodejs');
-
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  Users.findOne({ id: id } , function (err, user) {
-    done(err, user);
-  });
-});
-
-passport.use(new LdapStrategy(sails.config.passport.ldapauth,function(rootUser,done){
-  var email = rootUser.mail.toLowerCase();
-
-  Users.findOrCreate({email:email},{
-    email:email,
-    firstName:rootUser.givenName,
-    lastName:rootUser.sn
-  },done);
-}));
-
-passport.use(new LocalStrategy(sails.config.passport.local,function(email, password, done) {
-  Users.findOne({ email: email }, function (err, user) {
-    if (err || !user)
-    { 
-      return done(err,false);
-    }
-
-    bcrypt.compare(password, user.password, function (err, res) {
-      if (err || !res)
-      {
-        return done(err, false);
-      }
-      else
-      {
-        return done(null, user);
-      }
-    });
-  });
-}));
-{% endhighlight %}
-We call Passport's `serializeUser` and `deserializeUser` functions.  After that, simply use the `LdapStrategy` and `LocalStrategy` in passport's `use` function.  In the callbacks, do your own server's logic to authenicate/create a user.  
-
-8: Nothing to change/add here.  
-
-9: This part is a little tricky because it is more custom to your app.  Learn more about it [here][link2]:
-
-This is what we ended up using:  
-{% highlight javascript linenos %}
-'*': ['passport'],
-
-'AuthController': {
-  '*': true
-},
- 
-'ProjectsController':{
-  'css':true,
-  'exportTemplates':true,
-  'exportPage':true,
-  'preloader':true
-}
-{% endhighlight %}
-Essentially, all routes need to run passport policy (of step 8) first `'*': ['passport']`.  If you are using the `AuthController`, all routes can exclude the passport policy: `'*': true`.  If you are using the `ProjectsController`, css, exportTemplates, exportPage and preloader exclude the passport policy.
-
-That is it!  With that configuration, we were able to get LDAP working in a Sails app using passport.
+That is it!  With that configuration, we were able to get Azure-OAuth working in a Sails app using passport.
 
 [link1]: http://rootinc.github.io/2016/04/28/sails-passport-ldap/
 [link2]: https://dev.office.com/app-registration
