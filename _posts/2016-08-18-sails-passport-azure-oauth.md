@@ -8,7 +8,7 @@ published: true
 ---
 This tutorial is based on this [link][link1]:
 
-There are a couple things we need to do in addition to the tutorial previously made a few months ago.  I will point out the differences here:
+There are a couple things we need to do in addition to the tutorial previously made a few months ago.  I will point out the modifications here (in no particular order):
 
 1: First, make sure you `npm install passport-azure-oath` and update `package.json` to reflect this.  You can remove and npm uninstall `passport-ldap`.
 
